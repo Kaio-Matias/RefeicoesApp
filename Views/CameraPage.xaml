@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RefeicoesApp.Views.CameraPage"
+             xmlns:viewmodel="clr-namespace:RefeicoesApp.ViewModels"
+             x:DataType="viewmodel:CameraViewModel"
+             xmlns:camera="clr-namespace:Camera.MAUI;assembly=Camera.MAUI"
+             Shell.NavBarIsVisible="False">
+    <Grid>
+        <camera:CameraView
+            x:Name="cameraView"
+            IsVisible="{Binding IsCameraVisible}"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand" />
+
+        <Label Text="{Binding CaptureCountdownText}" IsVisible="{Binding IsCameraVisible}" FontSize="96" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+
+        <Grid RowDefinitions="*, Auto" IsVisible="{Binding IsConfirmationVisible}" BackgroundColor="#CC000000">
+            <Image Grid.Row="0" Source="{Binding CapturedImageSource}" Aspect="AspectFit" Margin="20"/>
+            <VerticalStackLayout Grid.Row="1" Padding="20" Spacing="10">
+                <Label Text="{Binding ConfirmationCountdownText}" FontSize="22" TextColor="White" HorizontalOptions="Center" />
+                <Button Text="Confirmar" Command="{Binding ConfirmCommand}" IsEnabled="{Binding IsNotBusy}" />
+                <Button Text="Tentar Novamente" Command="{Binding RetakeCommand}" BackgroundColor="Gray" IsEnabled="{Binding IsNotBusy}" />
+            </VerticalStackLayout>
+        </Grid>
+
+        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="White" HorizontalOptions="Center" VerticalOptions="Center" />
+    </Grid>
+</ContentPage>

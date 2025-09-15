@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RefeicoesApp.Views.MainPage"
+             xmlns:viewmodel="clr-namespace:RefeicoesApp.ViewModels"
+             x:DataType="viewmodel:MainViewModel"
+             Shell.NavBarIsVisible="False">
+    <Grid RowDefinitions="*, Auto, *" BackgroundColor="#F0F0F0">
+        <VerticalStackLayout Grid.Row="1" Spacing="20" HorizontalOptions="Center">
+            <Image Source="seu_logo.png" HeightRequest="100" />
+            <Label Text="Registro de Refeição" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" />
+            <Label Text="Toque no ícone abaixo para registrar" HorizontalOptions="Center" />
+            <ImageButton 
+                Source="rosto_icon.png"
+                HeightRequest="150"
+                WidthRequest="150"
+                CornerRadius="75"
+                Command="{Binding GoToCameraCommand}"
+                HorizontalOptions="Center"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
