@@ -1,3 +1,4 @@
+// Views/CameraPage.xaml.cs
 using Camera.MAUI;
 using RefeicoesApp.ViewModels;
 using System.ComponentModel;
@@ -7,6 +8,7 @@ namespace RefeicoesApp.Views;
 public partial class CameraPage : ContentPage
 {
     private readonly CameraViewModel _viewModel;
+    private bool _isCameraInitialized = false;
 
     public CameraPage(CameraViewModel viewModel)
     {
@@ -15,24 +17,34 @@ public partial class CameraPage : ContentPage
         _viewModel = viewModel;
     }
 
-    protected override async void OnAppearing()
+    // O evento Loaded garante que o controle da câmera está pronto.
+    private async void CameraView_Loaded(object sender, EventArgs e)
     {
-        base.OnAppearing();
+        if (_isCameraInitialized)
+            return;
+
         await Permissions.RequestAsync<Permissions.Camera>();
 
+        // Inicia a câmera e seleciona a frontal
         await cameraView.StartCameraAsync();
         cameraView.Camera = cameraView.Cameras.FirstOrDefault(c => c.Position == CameraPosition.Front);
 
+        _isCameraInitialized = true;
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        // Apenas iniciamos a contagem aqui. A câmera é iniciada no evento Loaded.
         _viewModel.StartCaptureCountdown();
     }
 
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
-        // CORREÇÃO DEFINITIVA:
-        // A biblioteca permite chamar StopCameraAsync diretamente.
-        // A verificação 'if' foi removida.
+        // Chamamos StopCameraAsync para liberar a câmera quando a página some.
         cameraView.StopCameraAsync();
+        _isCameraInitialized = false;
     }
 
     protected override void OnBindingContextChanged()

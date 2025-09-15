@@ -11,8 +11,8 @@
             x:Name="cameraView"
             IsVisible="{Binding IsCameraVisible}"
             HorizontalOptions="FillAndExpand"
-            VerticalOptions="FillAndExpand" />
-
+            VerticalOptions="FillAndExpand"
+            Loaded="CameraView_Loaded" />
         <Label Text="{Binding CaptureCountdownText}" IsVisible="{Binding IsCameraVisible}" FontSize="96" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
 
         <Grid RowDefinitions="*, Auto" IsVisible="{Binding IsConfirmationVisible}" BackgroundColor="#CC000000">
